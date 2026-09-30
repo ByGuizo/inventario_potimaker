@@ -1,12 +1,34 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="pt-br">
 <head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Page Title</title>
-    <link rel='stylesheet' href='main.css'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventário | Potimaker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/cadastro.css' %}">
 </head>
 <body>
-    Aqui vai ficar a pagina de cadastro
+    <div class="grid-bg"></div>
+
+    <main class="card">
+        <span class="tag">// acesso restrito</span>
+        <h1 class="titulo">INVENTÁRIO</h1>
+        <p class="subtitulo">do <strong>Potimaker</strong></p>
+
+        <form method="post" class="form">
+            {% csrf_token %}
+            <label for="senha" class="label">Senha de acesso</label>
+            <input type="password" id="senha" name="senha" class="input"
+                   placeholder="••••••••" required autofocus>
+
+            {% if erro %}
+                <p class="erro">{{ erro }}</p>
+            {% endif %}
+
+            <button type="submit" class="botao">ENTRAR</button>
+        </form>
+    </main>
 </body>
 </html>
