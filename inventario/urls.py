@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from cadastro.views import *
+from telainicial.views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', cadastro, name='cadastro'),
+    path('inventario/', inventario, name='inventario'),
 ]
