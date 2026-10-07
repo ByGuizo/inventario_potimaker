@@ -30,9 +30,6 @@ body {
     padding: 16px;
 }
 
-/* ===== Formas decorativas ===== */
-
-/* Faixa rosa no topo */
 body::before {
     content: "";
     position: fixed;
@@ -42,7 +39,6 @@ body::before {
     z-index: 1;
 }
 
-/* Bloco amarelo na direita */
 body::after {
     content: "";
     position: fixed;
@@ -52,7 +48,6 @@ body::after {
     z-index: 1;
 }
 
-/* Grade quadriculada */
 .grid-bg {
     position: fixed;
     inset: 0;
@@ -63,7 +58,6 @@ body::after {
     z-index: 0;
 }
 
-/* Pontinhos pretos na esquerda */
 .grid-bg::before {
     content: "";
     position: absolute;
@@ -75,7 +69,6 @@ body::after {
     background-size: 16px 16px;
 }
 
-/* Círculo listrado no canto inferior esquerdo */
 .grid-bg::after {
     content: "";
     position: absolute;
@@ -92,8 +85,6 @@ body::after {
     );
 }
 
-/* ===== Card ===== */
-
 .card {
     position: relative;
     z-index: 2;
@@ -107,7 +98,6 @@ body::after {
     box-shadow: 10px 10px 0 var(--preto);
 }
 
-/* Faixa de blocos coloridos no topo do card */
 .card::before {
     content: "";
     position: absolute;
@@ -127,7 +117,6 @@ body::after {
     );
 }
 
-/* Etiqueta estilo "Centro de Convenções" */
 .tag {
     display: inline-block;
     padding: 4px 12px;
@@ -140,7 +129,6 @@ body::after {
     letter-spacing: 1px;
 }
 
-/* Título branco com contorno preto e marca-texto rosa */
 .titulo {
     display: inline-block;
     margin-top: 22px;
@@ -169,8 +157,6 @@ body::after {
     font-weight: 900;
     background: linear-gradient(transparent 45%, var(--ciano) 45%);
 }
-
-/* ===== Formulário ===== */
 
 .form {
     display: flex;
@@ -205,7 +191,7 @@ body::after {
 }
 
 .erro {
-    align-self: flex-start;
+    align-self: center;
     margin-top: 12px;
     padding: 4px 10px;
     background: var(--rosa);
