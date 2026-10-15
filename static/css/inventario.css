@@ -1,0 +1,659 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;900&display=swap");
+
+:root {
+    --menta: #3ee6b4;
+    --rosa: #f25aa6;
+    --amarelo: #ffe54a;
+    --ciano: #3fd4f5;
+    --azul: #2c5bd9;
+    --laranja: #ff7a3d;
+    --preto: #111111;
+    --branco: #ffffff;
+    --texto-suave: #444455;
+    --linha-par: rgba(62, 230, 180, 0.12);
+    --linha-hover: rgba(255, 229, 74, 0.4);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    background-color: var(--menta);
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
+    background-size: 22px 22px;
+    background-attachment: fixed;
+}
+
+body {
+    min-height: 100vh;
+    padding: 40px 16px 64px;
+    color: var(--preto);
+    font-family: "Rubik", sans-serif;
+    font-weight: 500;
+}
+
+/* ===== Formas de fundo ===== */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: var(--rosa);
+    clip-path: polygon(8% 0, 62% 0, 57% 7%, 13% 4%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: var(--amarelo);
+    clip-path: polygon(92% 0, 100% 0, 100% 100%, 86% 100%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+body > header,
+body > main {
+    position: relative;
+    z-index: 1;
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+/* ===== Cabeçalho da página ===== */
+body > header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+body > header h1 {
+    display: inline-block;
+    padding: 0 10px;
+    font-weight: 900;
+    font-size: clamp(32px, 6vw, 52px);
+    letter-spacing: 1px;
+    color: var(--branco);
+    -webkit-text-stroke: 2px var(--preto);
+    paint-order: stroke fill;
+    text-shadow: 4px 4px 0 var(--preto);
+    background: linear-gradient(transparent 50%, var(--rosa) 50%);
+}
+
+body > header p {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 6px 14px;
+    background: var(--branco);
+    border: 3px solid var(--preto);
+    box-shadow: 4px 4px 0 var(--preto);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--texto-suave);
+}
+
+/* ===== Navegação ===== */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 36px;
+}
+
+nav a {
+    display: inline-block;
+    padding: 8px 18px;
+    background: var(--branco);
+    border: 3px solid var(--preto);
+    border-radius: 10px;
+    box-shadow: 4px 4px 0 var(--preto);
+    color: var(--preto);
+    font-weight: 900;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+}
+
+nav a:nth-child(2) {
+    background: var(--amarelo);
+}
+
+nav a:hover {
+    background: var(--ciano);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--preto);
+}
+
+nav a:active {
+    transform: translate(3px, 3px);
+    box-shadow: 1px 1px 0 var(--preto);
+}
+
+/* ===== Seções (cards) ===== */
+main > section {
+    position: relative;
+    margin-bottom: 40px;
+    padding: 48px 28px 32px;
+    background: var(--branco);
+    border: 4px solid var(--preto);
+    border-radius: 16px;
+    box-shadow: 10px 10px 0 var(--preto);
+    scroll-margin-top: 24px;
+}
+
+main > section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 16px;
+    border-bottom: 4px solid var(--preto);
+    border-radius: 12px 12px 0 0;
+    background: linear-gradient(
+        90deg,
+        var(--rosa) 0 20%,
+        var(--amarelo) 20% 40%,
+        var(--ciano) 40% 60%,
+        var(--laranja) 60% 80%,
+        var(--azul) 80% 100%
+    );
+}
+
+#inventario {
+    overflow-x: auto;
+}
+
+section > header {
+    margin-bottom: 24px;
+}
+
+section > header h2 {
+    display: inline-block;
+    padding: 0 6px;
+    font-weight: 900;
+    font-size: 28px;
+    background: linear-gradient(transparent 55%, var(--ciano) 55%);
+}
+
+#novo-item > header h2 {
+    background: linear-gradient(transparent 55%, var(--amarelo) 55%);
+}
+
+section > header p {
+    margin-top: 8px;
+    font-weight: 700;
+    color: var(--texto-suave);
+}
+
+/* ===== Divisor ===== */
+hr {
+    height: 16px;
+    margin: 0 0 40px;
+    border: 3px solid var(--preto);
+    border-radius: 8px;
+    background: repeating-linear-gradient(
+        45deg,
+        var(--preto) 0 10px,
+        var(--amarelo) 10px 20px
+    );
+}
+
+/* ===== Tabela ===== */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 3px solid var(--preto);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+caption {
+    caption-side: top;
+    margin-bottom: 12px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--texto-suave);
+}
+
+thead th {
+    padding: 14px 16px;
+    background: var(--preto);
+    color: var(--branco);
+    font-weight: 900;
+    font-size: 13px;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+tbody td {
+    padding: 14px 16px;
+    border-top: 2px solid var(--preto);
+    font-size: 15px;
+    vertical-align: middle;
+    transition: background 0.12s;
+}
+
+tbody tr:first-child td {
+    border-top: none;
+}
+
+tbody tr:nth-child(even) td {
+    background: var(--linha-par);
+}
+
+tbody tr:hover td {
+    background: var(--linha-hover);
+}
+
+tbody td:first-child {
+    font-weight: 900;
+}
+
+tbody td strong {
+    font-weight: 900;
+}
+
+/* Selo de estado */
+tbody td span {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--ciano);
+    border: 2px solid var(--preto);
+    border-radius: 999px;
+    box-shadow: 2px 2px 0 var(--preto);
+    font-weight: 700;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+/* Cores opcionais por estado (veja a observação abaixo do código) */
+tbody td span.status-disponivel { background: var(--menta); }
+tbody td span.status-manutencao { background: var(--amarelo); }
+tbody td span.status-inativo    { background: var(--rosa); color: var(--branco); }
+
+/* Linha vazia */
+tbody td[colspan] {
+    padding: 40px 16px;
+    text-align: center;
+}
+
+tbody td[colspan] p {
+    margin-bottom: 16px;
+    font-weight: 700;
+    color: var(--texto-suave);
+}
+
+tbody td[colspan] a {
+    display: inline-block;
+    padding: 10px 18px;
+    background: var(--amarelo);
+    border: 3px solid var(--preto);
+    border-radius: 10px;
+    box-shadow: 4px 4px 0 var(--preto);
+    color: var(--preto);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+}
+
+tbody td[colspan] a:hover {
+    background: var(--ciano);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--preto);
+}
+
+/* ===== Botão "Editar" (details) ===== */
+details summary {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--amarelo);
+    border: 3px solid var(--preto);
+    border-radius: 8px;
+    box-shadow: 3px 3px 0 var(--preto);
+    font-weight: 900;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+}
+
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+details summary::marker {
+    content: "";
+}
+
+details summary:hover {
+    background: var(--ciano);
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 var(--preto);
+}
+
+details[open] summary {
+    background: var(--rosa);
+    color: var(--branco);
+}
+
+/* ===== Formulários ===== */
+fieldset {
+    display: grid;
+    gap: 20px;
+    border: none;
+}
+
+legend {
+    float: left;
+    grid-column: 1 / -1;
+    justify-self: start;
+    padding: 4px 12px;
+    background: var(--branco);
+    border: 3px solid var(--preto);
+    box-shadow: 4px 4px 0 var(--amarelo), 4px 4px 0 3px var(--preto);
+    font-weight: 900;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+fieldset > div {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 14px 16px;
+    background-color: var(--branco);
+    border: 3px solid var(--preto);
+    border-radius: 10px;
+    box-shadow: 4px 4px 0 var(--preto);
+    color: var(--preto);
+    font-family: "Rubik", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    outline: none;
+    transition: box-shadow 0.15s, transform 0.15s;
+}
+
+select {
+    appearance: none;
+    padding-right: 42px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1.5 1.5l5.5 5.5 5.5-5.5' fill='none' stroke='%23111111' stroke-width='3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+}
+
+input:focus,
+select:focus {
+    box-shadow: 4px 4px 0 var(--rosa), 4px 4px 0 3px var(--preto);
+    transform: translate(-1px, -1px);
+}
+
+button {
+    width: 100%;
+    margin-top: 6px;
+    padding: 14px;
+    background: var(--amarelo);
+    color: var(--preto);
+    border: 3px solid var(--preto);
+    border-radius: 10px;
+    box-shadow: 6px 6px 0 var(--preto);
+    font-family: "Rubik", sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+}
+
+button:hover {
+    background: var(--ciano);
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 var(--preto);
+}
+
+button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 2px 2px 0 var(--preto);
+}
+
+/* Formulário de novo item em duas colunas */
+#novo-item fieldset {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px 24px;
+}
+
+#novo-item fieldset > div:last-child {
+    grid-column: 1 / -1;
+}
+
+/* Formulário de edição dentro da tabela */
+td fieldset {
+    min-width: 260px;
+    margin-top: 14px;
+    padding: 18px;
+    gap: 14px;
+    background: var(--branco);
+    border: 3px solid var(--preto);
+    border-radius: 12px;
+    box-shadow: 5px 5px 0 var(--preto);
+}
+
+td legend {
+    font-size: 11px;
+}
+
+td input,
+td select {
+    padding: 10px 12px;
+    font-size: 15px;
+    box-shadow: 3px 3px 0 var(--preto);
+}
+
+td select {
+    padding-right: 38px;
+    background-position: right 12px center;
+}
+
+td button {
+    margin-top: 2px;
+    padding: 11px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    box-shadow: 4px 4px 0 var(--preto);
+}
+
+/* ===== Mensagens do sistema (toast) ===== */
+main > aside {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: min(360px, calc(100vw - 40px));
+    animation: entrar 0.35s ease-out, sumir 0.4s ease-in 5s forwards;
+}
+
+main > aside p {
+    padding: 14px 18px;
+    background: var(--branco);
+    border: 3px solid var(--preto);
+    border-left: 12px solid var(--ciano);
+    border-radius: 10px;
+    box-shadow: 5px 5px 0 var(--preto);
+    font-weight: 700;
+}
+
+@keyframes entrar {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sumir {
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+/* ===== Acessibilidade ===== */
+a:focus-visible,
+summary:focus-visible,
+button:focus-visible {
+    outline: 3px dashed var(--azul);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0s !important;
+        transition: none !important;
+    }
+}
+
+/* ===== Celular: tabela vira cards ===== */
+@media (max-width: 760px) {
+    body {
+        padding: 24px 12px 48px;
+    }
+
+    main > section {
+        padding: 40px 16px 24px;
+        box-shadow: 6px 6px 0 var(--preto);
+    }
+
+    section > header h2 {
+        font-size: 24px;
+    }
+
+    #novo-item fieldset {
+        grid-template-columns: 1fr;
+    }
+
+    #inventario table,
+    #inventario caption,
+    #inventario tbody,
+    #inventario tr,
+    #inventario td {
+        display: block;
+        width: 100%;
+    }
+
+    #inventario table {
+        border: none;
+        border-radius: 0;
+        overflow: visible;
+    }
+
+    #inventario thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
+    #inventario tbody tr {
+        margin-bottom: 18px;
+        border: 3px solid var(--preto);
+        border-radius: 12px;
+        box-shadow: 5px 5px 0 var(--preto);
+        overflow: hidden;
+        background: var(--branco);
+    }
+
+    #inventario tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border-top: 2px solid var(--preto);
+        text-align: right;
+    }
+
+    #inventario tbody td:first-child {
+        border-top: none;
+    }
+
+    #inventario tbody td::before {
+        font-weight: 900;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--texto-suave);
+        text-align: left;
+    }
+
+    #inventario tbody td:nth-child(1)::before { content: "ID"; }
+    #inventario tbody td:nth-child(2)::before { content: "Equipamento"; }
+    #inventario tbody td:nth-child(3)::before { content: "Tipo"; }
+    #inventario tbody td:nth-child(4)::before { content: "Categoria"; }
+    #inventario tbody td:nth-child(5)::before { content: "Quantidade"; }
+    #inventario tbody td:nth-child(6)::before { content: "Estado"; }
+    #inventario tbody td:nth-child(7)::before { content: "Ações"; }
+
+    #inventario tbody td:nth-child(7) {
+        display: block;
+        text-align: left;
+    }
+
+    #inventario tbody td:nth-child(7)::before {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    #inventario tbody td[colspan] {
+        display: block;
+        text-align: center;
+    }
+
+    #inventario tbody td[colspan]::before {
+        content: none;
+    }
+
+    td fieldset {
+        min-width: 0;
+    }
+}
