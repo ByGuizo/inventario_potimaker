@@ -1,12 +1,260 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="pt-BR">
 <head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>Page Title</title>
-    <link rel='stylesheet' href='main.css'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventário | PotiMaker</title>
 </head>
 <body>
-    Aqui fica o inventario
+
+    <header>
+        <h1>Inventário PotiMaker</h1>
+        <p>Gerenciamento de equipamentos e materiais do inventário.</p>
+    </header>
+
+    <main>
+
+ 
+        <nav aria-label="Navegação do inventário">
+            <a href="#inventario">Inventário</a>
+            <a href="#novo-item">Adicionar equipamento</a>
+        </nav>
+
+
+        <section id="inventario" aria-labelledby="titulo-inventario">
+            <header>
+                <h2 id="titulo-inventario">Itens do inventário</h2>
+                <p>Visualização dos equipamentos registrados.</p>
+            </header>
+
+  
+            <table>
+                <caption>Equipamentos cadastrados no inventário</caption>
+
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Equipamento</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in itens %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+
+                            <td>
+                                <strong>{{ item.nome }}</strong>
+                            </td>
+
+                            <td>
+                                {% if item.tipo %}
+                                    {{ item.tipo.nome }}
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if item.categoria %}
+                                    {{ item.categoria.nome }}
+                                {% elif item.id_categoria %}
+                                    {{ item.id_categoria }}
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </td>
+
+                            <td>{{ item.quantidade }}</td>
+
+                            <td>
+                                {% if item.status.nome == 'Disponível' %}
+                                    <span>Disponível</span>
+                                {% elif item.status.nome == 'Em Manutenção' %}
+                                    <span>Em Manutenção</span>
+                                {% elif item.status.nome == 'Inativo' %}
+                                    <span>Inativo</span>
+                                {% else %}
+                                    {{ item.status.nome|default:'Não informado' }}
+                                {% endif %}
+                            </td>
+
+                            <td>
+                          
+                                <details>
+                                    <summary>Editar</summary>
+
+                                    <form method="post" action="">
+                                        {% csrf_token %}
+
+                                        
+                                        <input type="hidden" name="acao" value="editar">
+                                        <input type="hidden" name="id" value="{{ item.id }}">
+
+                                        <fieldset>
+                                            <legend>Editar item #{{ item.id }}</legend>
+
+                                            <div>
+                                                <label for="nome-{{ item.id }}">Nome</label>
+                                                <input
+                                                    type="text"
+                                                    id="nome-{{ item.id }}"
+                                                    name="nome"
+                                                    value="{{ item.nome }}"
+                                                    required
+                                                >
+                                            </div>
+
+                                            <div>
+                                                <label for="categoria-{{ item.id }}">Categoria</label>
+                                                <select id="categoria-{{ item.id }}" name="id_categoria" required>
+                                                    <option value="">Selecione</option>
+
+                                                    {% if categorias %}
+                                                        {% for categoria in categorias %}
+                                                            <option
+                                                                value="{{ categoria.id }}"
+                                                                {% if item.id_categoria == categoria.id or item.categoria.id == categoria.id %}selected{% endif %}
+                                                            >
+                                                                {{ categoria.nome }}
+                                                            </option>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        
+                                                        <option value="1" {% if item.id_categoria == 1 or item.categoria.id == 1 %}selected{% endif %}>Periféricos</option>
+                                                        <option value="2" {% if item.id_categoria == 2 or item.categoria.id == 2 %}selected{% endif %}>Eletrônicos</option>
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+
+                                            <div>
+                                                <label for="quantidade-{{ item.id }}">Quantidade</label>
+                                                <input
+                                                    type="number"
+                                                    id="quantidade-{{ item.id }}"
+                                                    name="quantidade"
+                                                    value="{{ item.quantidade }}"
+                                                    min="0"
+                                                    required
+                                                >
+                                            </div>
+
+                                            <div>
+                                                <label for="status-{{ item.id }}">Estado</label>
+                                                <select id="status-{{ item.id }}" name="id_status" required>
+                                                    <option value="1" {% if item.id_status == 1 or item.status.id == 1 %}selected{% endif %}>Disponível</option>
+                                                    <option value="2" {% if item.id_status == 2 or item.status.id == 2 %}selected{% endif %}>Em Manutenção</option>
+                                                    <option value="3" {% if item.id_status == 3 or item.status.id == 3 %}selected{% endif %}>Inativo</option>
+                                                </select>
+                                            </div>
+
+                                            <div>
+                                                <button type="submit">Salvar alterações</button>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </details>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="7">
+                                <p>Nenhum item foi encontrado no inventário.</p>
+                                <a href="#novo-item">Cadastrar o primeiro item</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <hr>
+
+        <section id="novo-item" aria-labelledby="titulo-novo-item">
+            <header>
+                <h2 id="titulo-novo-item">Adicionar equipamento</h2>
+                <p>Cadastre um novo item diretamente nesta página.</p>
+            </header>
+
+            <form method="post" action="">
+                {% csrf_token %}
+
+                
+                <input type="hidden" name="acao" value="criar">
+
+                <fieldset>
+                    <legend>Dados do novo equipamento</legend>
+
+                    <div>
+                        <label for="novo-nome">Nome</label>
+                        <input
+                            type="text"
+                            id="novo-nome"
+                            name="nome"
+                            placeholder="Ex.: Notebook"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label for="nova-categoria">Categoria</label>
+                        <select id="nova-categoria" name="id_categoria" required>
+                            <option value="">Selecione uma categoria</option>
+
+                            {% if categorias %}
+                                {% for categoria in categorias %}
+                                    <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                                {% endfor %}
+                            {% else %}
+                                
+                                <option value="1">Periféricos</option>
+                                <option value="2">Eletrônicos</option>
+                            {% endif %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="nova-quantidade">Quantidade</label>
+                        <input
+                            type="number"
+                            id="nova-quantidade"
+                            name="quantidade"
+                            min="0"
+                            value="1"
+                            required
+                        >
+                    </div>
+
+                    <div>
+                        <label for="novo-status">Estado inicial</label>
+                        <select id="novo-status" name="id_status" required>
+                            <option value="1" selected>Disponível</option>
+                            <option value="2">Em Manutenção</option>
+                            <option value="3">Inativo</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <button type="submit">Adicionar ao inventário</button>
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+        {% if messages %}
+            <aside aria-label="Mensagens do sistema">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </aside>
+        {% endif %}
+
+    </main>
+
 </body>
 </html>
